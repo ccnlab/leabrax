@@ -7,9 +7,9 @@ package rl
 import (
 	"log"
 
+	"github.com/ccnlab/leabrax/deep"
+	"github.com/ccnlab/leabrax/leabra"
 	"github.com/chewxy/math32"
-	"github.com/emer/leabra/deep"
-	"github.com/emer/leabra/leabra"
 	"github.com/goki/ki/kit"
 )
 

@@ -18,9 +18,9 @@ func (ly *Layer) InhibFmGeAct(ltime *Time) {
 package interinhib
 
 import (
+	"github.com/ccnlab/leabrax/leabra"
 	"github.com/chewxy/math32"
 	"github.com/emer/emergent/emer"
-	"github.com/emer/leabra/leabra"
 )
 
 // InterInhib specifies inhibition between layers, where

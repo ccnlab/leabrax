@@ -6,8 +6,9 @@ package pvlv
 
 import (
 	"fmt"
+
+	"github.com/ccnlab/leabrax/leabra"
 	_ "github.com/emer/etable/etensor"
-	"github.com/emer/leabra/leabra"
 	"github.com/goki/ki/kit"
 )
 

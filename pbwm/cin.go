@@ -7,10 +7,10 @@ package pbwm
 import (
 	"fmt"
 
+	"github.com/ccnlab/leabrax/leabra"
+	"github.com/ccnlab/leabrax/rl"
 	"github.com/chewxy/math32"
 	"github.com/emer/emergent/emer"
-	"github.com/emer/leabra/leabra"
-	"github.com/emer/leabra/rl"
 	"github.com/goki/ki/kit"
 )
 

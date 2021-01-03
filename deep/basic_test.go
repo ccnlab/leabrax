@@ -8,12 +8,12 @@ import (
 	"fmt"
 	"testing"
 
+	"github.com/ccnlab/leabrax/leabra"
 	"github.com/chewxy/math32"
 	"github.com/emer/emergent/emer"
 	"github.com/emer/emergent/params"
 	"github.com/emer/emergent/prjn"
 	"github.com/emer/etable/etensor"
-	"github.com/emer/leabra/leabra"
 )
 
 // Note: this test project exactly reproduces the configuration and behavior of

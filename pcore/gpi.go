@@ -7,7 +7,7 @@ package pcore
 import (
 	"strings"
 
-	"github.com/emer/leabra/leabra"
+	"github.com/ccnlab/leabrax/leabra"
 	"github.com/goki/ki/kit"
 )
 

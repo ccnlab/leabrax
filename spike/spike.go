@@ -5,8 +5,8 @@
 package spike
 
 import (
+	"github.com/ccnlab/leabrax/leabra"
 	"github.com/chewxy/math32"
-	"github.com/emer/leabra/leabra"
 )
 
 // ActParams is full set of activation params including those from base

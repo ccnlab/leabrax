@@ -5,8 +5,8 @@
 package hip
 
 import (
+	"github.com/ccnlab/leabrax/leabra"
 	"github.com/chewxy/math32"
-	"github.com/emer/leabra/leabra"
 )
 
 // Contrastive Hebbian Learning (CHL) parameters

@@ -5,11 +5,12 @@
 package pvlv
 
 import (
-	"github.com/emer/emergent/emer"
-	"github.com/emer/leabra/leabra"
 	"strconv"
 
-	//"github.com/emer/leabra/pbwm"
+	"github.com/ccnlab/leabrax/leabra"
+	"github.com/emer/emergent/emer"
+
+	//"github.com/ccnlab/leabrax/pbwm"
 	"github.com/goki/ki/kit"
 )
 

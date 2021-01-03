@@ -5,10 +5,11 @@
 package pvlv
 
 import (
+	"strconv"
+
+	"github.com/ccnlab/leabrax/leabra"
 	"github.com/chewxy/math32"
 	"github.com/emer/emergent/emer"
-	"github.com/emer/leabra/leabra"
-	"strconv"
 )
 
 // Primary Value input layer. Sends activation directly to its receivers, bypassing the standard mechanisms.

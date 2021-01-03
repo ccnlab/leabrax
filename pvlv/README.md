@@ -2,14 +2,14 @@
 
 # PVLV: Primary Value, Learned Value
 
-[![GoDoc](https://godoc.org/github.com/emer/leabra/pvlv?status.svg)](https://godoc.org/github.com/emer/leabra/pvlv)
+[![GoDoc](https://godoc.org/github.com/ccnlab/leabrax/pvlv?status.svg)](https://godoc.org/github.com/ccnlab/leabrax/pvlv)
 
 
 The PVLV model was ported from the model implemented in the C++ version of Emergent, and tries to faithfully reproduce the functionality of that model, as described in [Mollick et al, 2020](#references). This is the updated, bivalent version of PVLV, which has significant differences from the version created by the PVLV Wizard in C++ Emergent. Some portions of the code are very close to their C++ progenitors. At the same time, the Go version of the model follows the conventions of the new framework, so some aspects are quite different. The rewritten model's code should be on the whole more straightforward and easier to understand than the C++ version. That said, this is a very complex model, with a number of components that interact in ways that may not be immediately obvious.
 
 ## Example/Textbook Application
 
-A detailed description of the PVLV model from the standpoint of psychological phenomena can be found in the [PVLV example application documentation](https://github.com/emer/leabra/blob/master/examples/pvlv/README.md). This document describes some parts of the implementation of that model.
+A detailed description of the PVLV model from the standpoint of psychological phenomena can be found in the [PVLV example application documentation](https://github.com/ccnlab/leabrax/blob/master/examples/pvlv/README.md). This document describes some parts of the implementation of that model.
 
 ## Overall architecture of the example application
 
@@ -17,7 +17,7 @@ The entry point for the whole program is the `main()` function, in `pvlv.go`. Ju
 
 ### Command-line switches
 
-See the [command line options](https://github.com/emer/leabra/blob/master/examples/pvlv/README.md#appendix-command-line-parameters) appendix of the PVLV textbook application documentation for a description of the available command-line switches.
+See the [command line options](https://github.com/ccnlab/leabrax/blob/master/examples/pvlv/README.md#appendix-command-line-parameters) appendix of the PVLV textbook application documentation for a description of the available command-line switches.
 
 The PVLV model uses the [`Stepper`](https://github.com/emer/emergent/blob/master/stepper/README.md) package to control running of the application.
 

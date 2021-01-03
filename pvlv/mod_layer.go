@@ -8,12 +8,13 @@ package pvlv
 
 import (
 	"fmt"
+	"strconv"
+
+	"github.com/ccnlab/leabrax/leabra"
 	"github.com/chewxy/math32"
 	"github.com/emer/emergent/emer"
 	"github.com/emer/etable/minmax"
-	"github.com/emer/leabra/leabra"
 	"github.com/goki/ki/kit"
-	"strconv"
 )
 
 type IModLayer interface {

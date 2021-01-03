@@ -5,12 +5,12 @@
 package leabra
 
 import (
+	"github.com/ccnlab/leabrax/chans"
+	"github.com/ccnlab/leabrax/knadapt"
+	"github.com/ccnlab/leabrax/nxx1"
 	"github.com/chewxy/math32"
 	"github.com/emer/emergent/erand"
 	"github.com/emer/etable/minmax"
-	"github.com/emer/leabra/chans"
-	"github.com/emer/leabra/knadapt"
-	"github.com/emer/leabra/nxx1"
 	"github.com/goki/ki/ints"
 	"github.com/goki/ki/kit"
 	"github.com/goki/mat32"

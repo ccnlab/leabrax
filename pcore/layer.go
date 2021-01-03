@@ -7,9 +7,9 @@ package pcore
 import (
 	"fmt"
 
+	"github.com/ccnlab/leabrax/glong"
+	"github.com/ccnlab/leabrax/leabra"
 	"github.com/chewxy/math32"
-	"github.com/emer/leabra/glong"
-	"github.com/emer/leabra/leabra"
 	"github.com/goki/ki/kit"
 )
 

@@ -30,7 +30,7 @@ import "flag"
 "github.com/emer/etable/etensor"
 _ "github.com/emer/etable/etview" # include to get gui views
 "github.com/emer/etable/split"
-"github.com/emer/leabra/leabra"
+"github.com/ccnlab/leabrax/leabra"
 "github.com/goki/gi/gi"
 "github.com/goki/gi/gimain"
 "github.com/goki/gi/giv"
@@ -1320,7 +1320,7 @@ class Sim(pygiv.ClassViewObj):
 
         tbar.AddAction(gi.ActOpts(Label= "README", Icon= "file-markdown", Tooltip= "Opens your browser on the README file that contains instructions for how to run this model."), win.This(),
             funcrecv, send, sig, data:
-                gi.OpenURL("https://github.com/emer/leabra/blob/master/examples/ra25/README.md"))
+                gi.OpenURL("https://github.com/ccnlab/leabrax/blob/master/examples/ra25/README.md"))
 
         vp.UpdateEndNoSig(updt)
 

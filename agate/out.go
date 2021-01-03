@@ -7,8 +7,8 @@ package agate
 import (
 	"log"
 
+	"github.com/ccnlab/leabrax/leabra"
 	"github.com/emer/emergent/emer"
-	"github.com/emer/leabra/leabra"
 	"github.com/goki/ki/kit"
 )
 

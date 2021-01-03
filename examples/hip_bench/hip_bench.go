@@ -15,6 +15,8 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/ccnlab/leabrax/hip"
+	"github.com/ccnlab/leabrax/leabra"
 	"github.com/emer/emergent/emer"
 	"github.com/emer/emergent/env"
 	"github.com/emer/emergent/evec"
@@ -31,8 +33,6 @@ import (
 	"github.com/emer/etable/metric"
 	"github.com/emer/etable/simat"
 	"github.com/emer/etable/split"
-	"github.com/emer/leabra/hip"
-	"github.com/emer/leabra/leabra"
 	"github.com/goki/gi/gi"
 	"github.com/goki/gi/gimain"
 	"github.com/goki/gi/giv"
@@ -103,42 +103,42 @@ type PatParams struct {
 // as arguments to methods, and provides the core GUI interface (note the view tags
 // for the fields which provide hints to how things should be displayed).
 type Sim struct {
-	Net          *leabra.Network             `view:"no-inline"`
-	Hip          HipParams                   `desc:"hippocampus sizing parameters"`
-	Pat          PatParams                   `desc:"parameters for the input patterns"`
-	PoolVocab    patgen.Vocab                `view:"no-inline" desc:"pool patterns vocabulary"`
-	TrainAB      *etable.Table               `view:"no-inline" desc:"AB training patterns to use"`
-	TrainAC      *etable.Table               `view:"no-inline" desc:"AC training patterns to use"`
-	TestAB       *etable.Table               `view:"no-inline" desc:"AB testing patterns to use"`
-	TestAC       *etable.Table               `view:"no-inline" desc:"AC testing patterns to use"`
-	PreTrainLure *etable.Table               `view:"no-inline" desc:"Lure pretrain patterns to use"`
-	TestLure     *etable.Table               `view:"no-inline" desc:"Lure testing patterns to use"`
-	TrainAll     *etable.Table               `view:"no-inline" desc:"all training patterns -- for pretrain"`
-	TrnTrlLog    *etable.Table               `view:"no-inline" desc:"training trial-level log data"`
-	TrnEpcLog    *etable.Table               `view:"no-inline" desc:"training epoch-level log data"`
-	TstEpcLog    *etable.Table               `view:"no-inline" desc:"testing epoch-level log data"`
-	TstTrlLog    *etable.Table               `view:"no-inline" desc:"testing trial-level log data"`
-	TstCycLog    *etable.Table               `view:"no-inline" desc:"testing cycle-level log data"`
-	RunLog       *etable.Table               `view:"no-inline" desc:"summary log of each run"`
-	RunStats     *etable.Table               `view:"no-inline" desc:"aggregate stats on all runs"`
-	TstStats     *etable.Table               `view:"no-inline" desc:"testing stats"`
+	Net          *leabra.Network          `view:"no-inline"`
+	Hip          HipParams                `desc:"hippocampus sizing parameters"`
+	Pat          PatParams                `desc:"parameters for the input patterns"`
+	PoolVocab    patgen.Vocab             `view:"no-inline" desc:"pool patterns vocabulary"`
+	TrainAB      *etable.Table            `view:"no-inline" desc:"AB training patterns to use"`
+	TrainAC      *etable.Table            `view:"no-inline" desc:"AC training patterns to use"`
+	TestAB       *etable.Table            `view:"no-inline" desc:"AB testing patterns to use"`
+	TestAC       *etable.Table            `view:"no-inline" desc:"AC testing patterns to use"`
+	PreTrainLure *etable.Table            `view:"no-inline" desc:"Lure pretrain patterns to use"`
+	TestLure     *etable.Table            `view:"no-inline" desc:"Lure testing patterns to use"`
+	TrainAll     *etable.Table            `view:"no-inline" desc:"all training patterns -- for pretrain"`
+	TrnTrlLog    *etable.Table            `view:"no-inline" desc:"training trial-level log data"`
+	TrnEpcLog    *etable.Table            `view:"no-inline" desc:"training epoch-level log data"`
+	TstEpcLog    *etable.Table            `view:"no-inline" desc:"testing epoch-level log data"`
+	TstTrlLog    *etable.Table            `view:"no-inline" desc:"testing trial-level log data"`
+	TstCycLog    *etable.Table            `view:"no-inline" desc:"testing cycle-level log data"`
+	RunLog       *etable.Table            `view:"no-inline" desc:"summary log of each run"`
+	RunStats     *etable.Table            `view:"no-inline" desc:"aggregate stats on all runs"`
+	TstStats     *etable.Table            `view:"no-inline" desc:"testing stats"`
 	SimMats      map[string]*simat.SimMat `view:"no-inline" desc:"similarity matrix results for layers"`
-	Params       params.Sets                 `view:"no-inline" desc:"full collection of param sets"`
-	ParamSet     string                      `desc:"which set of *additional* parameters to use -- always applies Base and optionaly this next if set"`
-	Tag          string                      `desc:"extra tag string to add to any file names output from sim (e.g., weights files, log files, params)"`
-	BatchRun	 int                         `desc:"current batch run number, for generating different seed"`
-	MaxRuns      int                         `desc:"maximum number of model runs to perform"`
-	MaxEpcs      int                         `desc:"maximum number of epochs to run per model run"`
-	PreTrainEpcs int                         `desc:"number of epochs to run for pretraining"`
-	NZeroStop    int                         `desc:"if a positive number, training will stop after this many epochs with zero mem errors"`
-	TrainEnv     env.FixedTable              `desc:"Training environment -- contains everything about iterating over input / output patterns over training"`
-	TestEnv      env.FixedTable              `desc:"Testing environment -- manages iterating over testing"`
-	Time         leabra.Time                 `desc:"leabra timing parameters and state"`
-	ViewOn       bool                        `desc:"whether to update the network view while running"`
-	TrainUpdt    leabra.TimeScales           `desc:"at what time scale to update the display during training?  Anything longer than Epoch updates at Epoch in this model"`
-	TestUpdt     leabra.TimeScales           `desc:"at what time scale to update the display during testing?  Anything longer than Epoch updates at Epoch in this model"`
-	TestInterval int                         `desc:"how often to run through all the test patterns, in terms of training epochs -- can use 0 or -1 for no testing"`
-	MemThr       float64                     `desc:"threshold to use for memory test -- if error proportion is below this number, it is scored as a correct trial"`
+	Params       params.Sets              `view:"no-inline" desc:"full collection of param sets"`
+	ParamSet     string                   `desc:"which set of *additional* parameters to use -- always applies Base and optionaly this next if set"`
+	Tag          string                   `desc:"extra tag string to add to any file names output from sim (e.g., weights files, log files, params)"`
+	BatchRun     int                      `desc:"current batch run number, for generating different seed"`
+	MaxRuns      int                      `desc:"maximum number of model runs to perform"`
+	MaxEpcs      int                      `desc:"maximum number of epochs to run per model run"`
+	PreTrainEpcs int                      `desc:"number of epochs to run for pretraining"`
+	NZeroStop    int                      `desc:"if a positive number, training will stop after this many epochs with zero mem errors"`
+	TrainEnv     env.FixedTable           `desc:"Training environment -- contains everything about iterating over input / output patterns over training"`
+	TestEnv      env.FixedTable           `desc:"Testing environment -- manages iterating over testing"`
+	Time         leabra.Time              `desc:"leabra timing parameters and state"`
+	ViewOn       bool                     `desc:"whether to update the network view while running"`
+	TrainUpdt    leabra.TimeScales        `desc:"at what time scale to update the display during training?  Anything longer than Epoch updates at Epoch in this model"`
+	TestUpdt     leabra.TimeScales        `desc:"at what time scale to update the display during testing?  Anything longer than Epoch updates at Epoch in this model"`
+	TestInterval int                      `desc:"how often to run through all the test patterns, in terms of training epochs -- can use 0 or -1 for no testing"`
+	MemThr       float64                  `desc:"threshold to use for memory test -- if error proportion is below this number, it is scored as a correct trial"`
 
 	// statistics: note use float64 as that is best for etable.Table
 	TestNm         string  `inactive:"+" desc:"what set of patterns are we currently testing"`
@@ -179,7 +179,7 @@ type Sim struct {
 	TstEpcFile   *os.File                    `view:"-" desc:"log file"`
 	TstEpcHdrs   bool                        `view:"-" desc:"headers written"`
 	RunFile      *os.File                    `view:"-" desc:"log file"`
-	RunHdrs		 bool                        `view:"-" desc:"headers written"`
+	RunHdrs      bool                        `view:"-" desc:"headers written"`
 	TmpVals      []float32                   `view:"-" desc:"temp slice for holding values -- prevent mem allocs"`
 	LayStatNms   []string                    `view:"-" desc:"names of layers to collect more detailed stats on (avg act, etc)"`
 	TstNms       []string                    `view:"-" desc:"names of test tables"`
@@ -268,7 +268,7 @@ func (hp *HipParams) Defaults() {
 func (ss *Sim) Defaults() {
 	ss.Hip.Defaults()
 	ss.Pat.Defaults()
-	ss.BatchRun = 0 // for initializing envs if using Gui
+	ss.BatchRun = 0        // for initializing envs if using Gui
 	ss.Time.CycPerQtr = 25 // note: key param - 25 seems like it is actually fine?
 	ss.Update()
 }
@@ -1134,7 +1134,7 @@ func (ss *Sim) ConfigPats() {
 
 	patgen.InitPats(ss.PreTrainLure, "PreTrainLure", "PreTrainLure Pats", "Input", "ECout", npats, ecY, ecX, plY, plX)
 	patgen.MixPats(ss.PreTrainLure, ss.PoolVocab, "Input", []string{"lA", "lB", "ctxt9", "ctxt10", "ctxt11", "ctxt12"}) // arbitrary ctxt here
-	patgen.MixPats(ss.PreTrainLure, ss.PoolVocab, "ECout", []string{"lA", "lB", "ctxt9", "ctxt10", "ctxt11", "ctxt12"})    // arbitrary ctxt here
+	patgen.MixPats(ss.PreTrainLure, ss.PoolVocab, "ECout", []string{"lA", "lB", "ctxt9", "ctxt10", "ctxt11", "ctxt12"}) // arbitrary ctxt here
 
 	patgen.InitPats(ss.TestLure, "TestLure", "TestLure Pats", "Input", "ECout", npats, ecY, ecX, plY, plX)
 	patgen.MixPats(ss.TestLure, ss.PoolVocab, "Input", []string{"lA", "empty", "ctxt9", "ctxt10", "ctxt11", "ctxt12"}) // arbitrary ctxt here
@@ -1540,7 +1540,7 @@ func (ss *Sim) LogTstEpc(dt *etable.Table) {
 	trl := ss.TstTrlLog
 	tix := etable.NewIdxView(trl)
 	epc := ss.TrainEnv.Epoch.Prv // ?
-	params := ss.RunName() // includes tag
+	params := ss.RunName()       // includes tag
 
 	if ss.LastEpcTime.IsZero() {
 		ss.EpcPerTrlMSec = 0
@@ -1803,7 +1803,6 @@ func (ss *Sim) LogRun(dt *etable.Table) {
 		dt.WriteCSVRow(ss.RunFile, row, etable.Tab)
 	}
 }
-
 
 func (ss *Sim) ConfigRunLog(dt *etable.Table) {
 	dt.SetMetaData("name", "RunLog")
@@ -2121,7 +2120,7 @@ func (ss *Sim) ConfigGui() *gi.Window {
 
 	tbar.AddAction(gi.ActOpts{Label: "README", Icon: "file-markdown", Tooltip: "Opens your browser on the README file that contains instructions for how to run this model."}, win.This(),
 		func(recv, send ki.Ki, sig int64, data interface{}) {
-			gi.OpenURL("https://github.com/emer/leabra/blob/master/examples/ra25/README.md")
+			gi.OpenURL("https://github.com/ccnlab/leabrax/blob/master/examples/ra25/README.md")
 		})
 
 	vp.UpdateEndNoSig(updt)
@@ -2280,7 +2279,7 @@ func (ss *Sim) CmdArgs() {
 
 	if saveEpcLog {
 		var err error
-		fnm := ss.LogFileName(strconv.Itoa(ss.BatchRun)+"epc")
+		fnm := ss.LogFileName(strconv.Itoa(ss.BatchRun) + "epc")
 		ss.TstEpcFile, err = os.Create(fnm)
 		if err != nil {
 			log.Println(err)
@@ -2292,7 +2291,7 @@ func (ss *Sim) CmdArgs() {
 	}
 	if saveRunLog {
 		var err error
-		fnm := ss.LogFileName(strconv.Itoa(ss.BatchRun)+"run")
+		fnm := ss.LogFileName(strconv.Itoa(ss.BatchRun) + "run")
 		ss.RunFile, err = os.Create(fnm)
 		if err != nil {
 			log.Println(err)
@@ -2306,7 +2305,7 @@ func (ss *Sim) CmdArgs() {
 		fmt.Printf("Saving final weights per run\n")
 	}
 	fmt.Printf("Batch No. %d\n", ss.BatchRun)
-	fmt.Printf("Running %d Runs\n", ss.MaxRuns - ss.BatchRun)
+	fmt.Printf("Running %d Runs\n", ss.MaxRuns-ss.BatchRun)
 	// ss.Train()
 	ss.TwoFactorRun()
 	//fnm := ss.LogFileName("runs")

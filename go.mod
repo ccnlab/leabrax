@@ -1,4 +1,4 @@
-module github.com/emer/leabra
+module github.com/ccnlab/leabrax
 
 go 1.13
 

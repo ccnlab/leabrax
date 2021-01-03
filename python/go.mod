@@ -1,4 +1,4 @@
-module github.com/emer/leabra/python
+module github.com/ccnlab/leabrax/python
 
 go 1.15
 
@@ -10,7 +10,7 @@ require (
 	github.com/emer/emergent v1.1.15
 	github.com/emer/etable v1.0.21
 	github.com/emer/etorch v1.0.5
-	github.com/emer/leabra v1.1.22
+	github.com/ccnlab/leabrax v1.1.22
 	github.com/emer/vision v1.1.6
 	github.com/go-gl/mathgl v1.0.0
 	github.com/go-python/gopy v0.3.4

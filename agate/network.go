@@ -5,13 +5,13 @@
 package agate
 
 import (
+	"github.com/ccnlab/leabrax/deep"
+	"github.com/ccnlab/leabrax/glong"
+	"github.com/ccnlab/leabrax/leabra"
+	"github.com/ccnlab/leabrax/pcore"
 	"github.com/emer/emergent/emer"
 	"github.com/emer/emergent/prjn"
 	"github.com/emer/emergent/relpos"
-	"github.com/emer/leabra/deep"
-	"github.com/emer/leabra/glong"
-	"github.com/emer/leabra/leabra"
-	"github.com/emer/leabra/pcore"
 	"github.com/goki/ki/kit"
 )
 

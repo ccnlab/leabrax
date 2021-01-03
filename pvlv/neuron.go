@@ -6,12 +6,13 @@ package pvlv
 
 import (
 	"fmt"
-	"github.com/chewxy/math32"
-	"github.com/emer/etable/etensor"
-	"github.com/emer/leabra/leabra"
-	"github.com/goki/ki/kit"
 	"log"
 	"unsafe"
+
+	"github.com/ccnlab/leabrax/leabra"
+	"github.com/chewxy/math32"
+	"github.com/emer/etable/etensor"
+	"github.com/goki/ki/kit"
 )
 
 // UnitVarNames returns a list of variable names available on the units in this layer

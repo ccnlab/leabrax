@@ -6,10 +6,11 @@ package pvlv
 
 import (
 	"fmt"
-	"github.com/emer/leabra/interinhib"
-	"github.com/emer/leabra/leabra"
-	"github.com/goki/ki/kit"
 	"strconv"
+
+	"github.com/ccnlab/leabrax/interinhib"
+	"github.com/ccnlab/leabrax/leabra"
+	"github.com/goki/ki/kit"
 )
 
 // IBlAmygLayer has one method, AsBlAmygLayer, that returns a pointer to the layer specifically as a BLA layer.

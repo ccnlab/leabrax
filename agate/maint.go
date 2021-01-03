@@ -5,10 +5,10 @@
 package agate
 
 import (
+	"github.com/ccnlab/leabrax/glong"
+	"github.com/ccnlab/leabrax/interinhib"
+	"github.com/ccnlab/leabrax/leabra"
 	"github.com/chewxy/math32"
-	"github.com/emer/leabra/glong"
-	"github.com/emer/leabra/interinhib"
-	"github.com/emer/leabra/leabra"
 	"github.com/goki/ki/kit"
 )
 

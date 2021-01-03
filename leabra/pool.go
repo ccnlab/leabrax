@@ -5,8 +5,8 @@
 package leabra
 
 import (
+	"github.com/ccnlab/leabrax/fffb"
 	"github.com/emer/etable/minmax"
-	"github.com/emer/leabra/fffb"
 )
 
 // Pool contains computed values for FFFB inhibition, and various other state values for layers

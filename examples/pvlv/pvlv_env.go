@@ -13,12 +13,12 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/ccnlab/leabrax/examples/pvlv/data"
+	"github.com/ccnlab/leabrax/pvlv"
 	"github.com/emer/emergent/env"
 	"github.com/emer/emergent/params"
 	"github.com/emer/etable/etable"
 	"github.com/emer/etable/etensor"
-	"github.com/emer/leabra/examples/pvlv/data"
-	"github.com/emer/leabra/pvlv"
 	"github.com/goki/ki/kit"
 )
 

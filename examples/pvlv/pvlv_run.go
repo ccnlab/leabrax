@@ -6,8 +6,9 @@ package main
 
 import (
 	"fmt"
-	"github.com/emer/leabra/examples/pvlv/data"
-	"github.com/emer/leabra/leabra"
+
+	"github.com/ccnlab/leabrax/examples/pvlv/data"
+	"github.com/ccnlab/leabrax/leabra"
 	"github.com/goki/ki/kit"
 )
 

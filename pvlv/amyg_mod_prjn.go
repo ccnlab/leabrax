@@ -5,9 +5,9 @@
 package pvlv
 
 import (
+	"github.com/ccnlab/leabrax/leabra"
 	"github.com/chewxy/math32"
 	"github.com/emer/etable/etensor"
-	"github.com/emer/leabra/leabra"
 )
 
 // IAmygPrjn has one method, AsAmygModPrjn, which recasts the projection as a moddulatory projection

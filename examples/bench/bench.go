@@ -16,6 +16,7 @@ import (
 	"math/rand"
 	"os"
 
+	"github.com/ccnlab/leabrax/leabra"
 	"github.com/emer/emergent/emer"
 	"github.com/emer/emergent/erand"
 	"github.com/emer/emergent/params"
@@ -24,7 +25,6 @@ import (
 	"github.com/emer/emergent/timer"
 	"github.com/emer/etable/etable"
 	"github.com/emer/etable/etensor"
-	"github.com/emer/leabra/leabra"
 )
 
 var Net *leabra.Network

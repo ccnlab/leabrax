@@ -5,9 +5,9 @@
 package glong
 
 import (
+	"github.com/ccnlab/leabrax/leabra"
 	"github.com/chewxy/math32"
 	"github.com/emer/emergent/emer"
-	"github.com/emer/leabra/leabra"
 	"github.com/goki/ki/ki"
 	"github.com/goki/ki/kit"
 )

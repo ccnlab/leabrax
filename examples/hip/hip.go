@@ -15,6 +15,8 @@ import (
 	"strings"
 	"time"
 
+	"github.com/ccnlab/leabrax/hip"
+	"github.com/ccnlab/leabrax/leabra"
 	"github.com/emer/emergent/emer"
 	"github.com/emer/emergent/env"
 	"github.com/emer/emergent/netview"
@@ -29,8 +31,6 @@ import (
 	"github.com/emer/etable/metric"
 	"github.com/emer/etable/simat"
 	"github.com/emer/etable/split"
-	"github.com/emer/leabra/hip"
-	"github.com/emer/leabra/leabra"
 	"github.com/goki/gi/gi"
 	"github.com/goki/gi/gimain"
 	"github.com/goki/gi/giv"
@@ -1854,7 +1854,7 @@ func (ss *Sim) ConfigGui() *gi.Window {
 
 	tbar.AddAction(gi.ActOpts{Label: "README", Icon: "file-markdown", Tooltip: "Opens your browser on the README file that contains instructions for how to run this model."}, win.This(),
 		func(recv, send ki.Ki, sig int64, data interface{}) {
-			gi.OpenURL("https://github.com/emer/leabra/blob/master/examples/hip/README.md")
+			gi.OpenURL("https://github.com/ccnlab/leabrax/blob/master/examples/hip/README.md")
 		})
 
 	vp.UpdateEndNoSig(updt)

@@ -14,7 +14,7 @@ First, you have to install the Go version of emergent: [Wiki Install](https://gi
 
 Python version 3 (3.6, 3.8 have been well tested) is recommended.
 
-This assumes that you are using go modules, as discussed in the wiki install page, and *that you are in the `leabra` directory where you installed leabra* (e.g., `git clone https://github.com/emer/leabra` and then `cd leabra`)
+This assumes that you are using go modules, as discussed in the wiki install page, and *that you are in the `leabra` directory where you installed leabra* (e.g., `git clone https://github.com/ccnlab/leabrax` and then `cd leabra`)
 
 ```sh
 $ cd python     # should be in leabra/python now -- i.e., the dir where this README.md is..
