@@ -68,9 +68,11 @@ var ParamSets = params.Sets{
 		"Network": &params.Sheet{
 			{Sel: "Prjn", Desc: "norm and momentum on works better, but wt bal is not better for smaller nets",
 				Params: params.Params{
-					"Prjn.Learn.Norm.On":     "true",
-					"Prjn.Learn.Momentum.On": "true",
-					"Prjn.Learn.WtBal.On":    "false",
+					"Prjn.Learn.Norm.On":          "true",
+					"Prjn.Learn.Momentum.On":      "true",
+					"Prjn.Learn.WtBal.On":         "false",
+					"Prjn.Learn.WtSig.PFail":      "0.01",
+					"Prjn.Learn.WtSig.PFailWtMax": "0.7",
 				}},
 			{Sel: "Layer", Desc: "using default 1.8 inhib for all of network -- can explore",
 				Params: params.Params{
@@ -223,7 +225,7 @@ func (ss *Sim) New() {
 	ss.ViewOn = true
 	ss.TrainUpdt = leabra.AlphaCycle
 	ss.TestUpdt = leabra.Cycle
-	ss.TestInterval = 5
+	ss.TestInterval = 5000
 	ss.LayStatNms = []string{"Hidden1", "Hidden2", "Output"}
 }
 
@@ -248,7 +250,7 @@ func (ss *Sim) ConfigEnv() {
 		ss.MaxRuns = 10
 	}
 	if ss.MaxEpcs == 0 { // allow user override
-		ss.MaxEpcs = 50
+		ss.MaxEpcs = 100
 		ss.NZeroStop = 5
 	}
 

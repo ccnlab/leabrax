@@ -6,6 +6,7 @@ package leabra
 
 import (
 	"github.com/chewxy/math32"
+	"github.com/emer/emergent/erand"
 )
 
 ///////////////////////////////////////////////////////////////////////
@@ -145,6 +146,11 @@ func (ls *LearnSynParams) WtFmDWt(wbInc, wbDec float32, dwt, wt, lwt *float32, s
 		*lwt = 1
 	}
 	*wt = scale * ls.WtSig.SigFmLinWt(*lwt)
+	if ls.WtSig.PFail > 0 {
+		if ls.WtSig.WtFail(*wt) {
+			*wt = 0
+		}
+	}
 	*dwt = 0
 }
 
@@ -383,9 +389,11 @@ func (xc *XCalParams) LongLrate(avgLLrn float32) float32 {
 
 // WtSigParams are sigmoidal weight contrast enhancement function parameters
 type WtSigParams struct {
-	Gain      float32 `def:"1,6" min:"0" desc:"gain (contrast, sharpness) of the weight contrast function (1 = linear)"`
-	Off       float32 `def:"1" min:"0" desc:"offset of the function (1=centered at .5, >1=higher, <1=lower) -- 1 is standard for XCAL"`
-	SoftBound bool    `def:"true" desc:"apply exponential soft bounding to the weight changes"`
+	Gain       float32 `def:"1,6" min:"0" desc:"gain (contrast, sharpness) of the weight contrast function (1 = linear)"`
+	Off        float32 `def:"1" min:"0" desc:"offset of the function (1=centered at .5, >1=higher, <1=lower) -- 1 is standard for XCAL"`
+	SoftBound  bool    `def:"true" desc:"apply exponential soft bounding to the weight changes"`
+	PFail      float32 `desc:"probability of synaptic transmission failure -- if > 0, then weights are turned off at random as a function of PFail * (1-Min(Wt/Max, 1))^2"`
+	PFailWtMax float32 `desc:"maximum weight value that experiences no synaptic failure -- weights at or above this level never fail to communicate, while probability of failure increases parabolically below this level"`
 }
 
 func (ws *WtSigParams) Update() {
@@ -395,6 +403,8 @@ func (ws *WtSigParams) Defaults() {
 	ws.Gain = 6
 	ws.Off = 1
 	ws.SoftBound = true
+	ws.PFail = 0
+	ws.PFailWtMax = 0.7
 }
 
 // SigFun is the sigmoid function for value w in 0-1 range, with gain and offset params
@@ -463,6 +473,24 @@ func (ws *WtSigParams) LinFmSigWt(sw float32) float32 {
 		return SigInvFun61(sw)
 	}
 	return SigInvFun(sw, ws.Gain, ws.Off)
+}
+
+// WtFailP returns probability of weight (synapse) failure given current weight value
+func (ws *WtSigParams) WtFailP(wt float32) float32 {
+	if wt >= ws.PFailWtMax {
+		return 0
+	}
+	weff := 1 - wt/ws.PFailWtMax
+	return ws.PFail * weff * weff
+}
+
+// WtFail returns true if synapse should fail
+func (ws *WtSigParams) WtFail(wt float32) bool {
+	fp := ws.WtFailP(wt)
+	if fp == 0 {
+		return false
+	}
+	return erand.BoolP(fp)
 }
 
 //////////////////////////////////////////////////////////////////////////////////////
