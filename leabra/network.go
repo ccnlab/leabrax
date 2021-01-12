@@ -140,6 +140,27 @@ func (nt *Network) WtFmDWt() {
 	nt.EmerNet.(LeabraNetwork).WtFmDWtImpl()
 }
 
+// WtFmLWt sets the effective weight value from the linear weight value.
+// This also removes any current weight failure zeros.
+func (nt *Network) WtFmLWt() {
+	for _, ly := range nt.Layers {
+		if ly.IsOff() {
+			continue
+		}
+		ly.(LeabraLayer).WtFmLWt()
+	}
+}
+
+// WtFail zeros out effective synaptic weights to simulate synaptic communication failures.
+func (nt *Network) WtFail() {
+	for _, ly := range nt.Layers {
+		if ly.IsOff() {
+			continue
+		}
+		ly.(LeabraLayer).WtFail()
+	}
+}
+
 //////////////////////////////////////////////////////////////////////////////////////
 //  Init methods
 

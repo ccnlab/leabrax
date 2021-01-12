@@ -68,11 +68,9 @@ var ParamSets = params.Sets{
 		"Network": &params.Sheet{
 			{Sel: "Prjn", Desc: "norm and momentum on works better, but wt bal is not better for smaller nets",
 				Params: params.Params{
-					"Prjn.Learn.Norm.On":          "true",
-					"Prjn.Learn.Momentum.On":      "true",
-					"Prjn.Learn.WtBal.On":         "false",
-					"Prjn.Learn.WtSig.PFail":      "0.01",
-					"Prjn.Learn.WtSig.PFailWtMax": "0.7",
+					"Prjn.Learn.Norm.On":     "true",
+					"Prjn.Learn.Momentum.On": "true",
+					"Prjn.Learn.WtBal.On":    "false",
 				}},
 			{Sel: "Layer", Desc: "using default 1.8 inhib for all of network -- can explore",
 				Params: params.Params{
@@ -83,6 +81,11 @@ var ParamSets = params.Sets{
 				Params: params.Params{
 					"Prjn.WtScale.Rel": "0.2",
 				}},
+			{Sel: ".Forward", Desc: "feedforward pathway",
+				Params: params.Params{
+					"Prjn.Learn.WtSig.PFailWtMax": "0.8",
+					"Prjn.Learn.WtSig.PFail":      "0.01",
+				}},
 			{Sel: "#Output", Desc: "output definitely needs lower inhib -- true for smaller layers in general",
 				Params: params.Params{
 					"Layer.Inhib.Layer.Gi": "1.4",
@@ -91,7 +94,7 @@ var ParamSets = params.Sets{
 		"Sim": &params.Sheet{ // sim params apply to sim object
 			{Sel: "Sim", Desc: "best params always finish in this time",
 				Params: params.Params{
-					"Sim.MaxEpcs": "50",
+					"Sim.MaxEpcs": "100",
 				}},
 		},
 	}},

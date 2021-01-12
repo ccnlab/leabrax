@@ -146,12 +146,17 @@ func (ls *LearnSynParams) WtFmDWt(wbInc, wbDec float32, dwt, wt, lwt *float32, s
 		*lwt = 1
 	}
 	*wt = scale * ls.WtSig.SigFmLinWt(*lwt)
+	*dwt = 0
+	ls.WtFail(wt)
+}
+
+// WtFail zeros out effective synaptic weights to simulate synaptic communication failures.
+func (ls *LearnSynParams) WtFail(wt *float32) {
 	if ls.WtSig.PFail > 0 {
 		if ls.WtSig.WtFail(*wt) {
 			*wt = 0
 		}
 	}
-	*dwt = 0
 }
 
 // LrnActAvgParams has rate constants for averaging over activations at different time scales,

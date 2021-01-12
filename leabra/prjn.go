@@ -641,6 +641,10 @@ func (pj *Prjn) WtBalFmWt() {
 		for ci := range rsidxs {
 			rsi := rsidxs[ci]
 			sy := &pj.Syns[rsi]
+			wt := sy.Wt
+			if wt == 0 { // if turned off
+				wt = sy.Scale * pj.Learn.WtSig.SigFmLinWt(sy.LWt)
+			}
 			if sy.Wt >= pj.Learn.WtBal.AvgThr {
 				sumWt += sy.Wt
 				sumN++
@@ -653,6 +657,23 @@ func (pj *Prjn) WtBalFmWt() {
 		}
 		wb.Avg = sumWt
 		wb.Fact, wb.Inc, wb.Dec = pj.Learn.WtBal.WtBal(sumWt)
+	}
+}
+
+// WtFmLWt sets the effective weight value from the linear weight value.
+// This also removes any current weight failure zeros.
+func (pj *Prjn) WtFmLWt() {
+	for si := range pj.Syns {
+		sy := &pj.Syns[si]
+		pj.Learn.WtFmLWt(sy)
+	}
+}
+
+// WtFail zeros out effective synaptic weights to simulate synaptic communication failures.
+func (pj *Prjn) WtFail() {
+	for si := range pj.Syns {
+		sy := &pj.Syns[si]
+		pj.Learn.WtFail(&sy.Wt)
 	}
 }
 

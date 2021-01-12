@@ -200,6 +200,13 @@ type LeabraLayer interface {
 	// WtBalFmWt computes the Weight Balance factors based on average recv weights
 	WtBalFmWt()
 
+	// WtFmLWt sets the effective weight value from the linear weight value.
+	// This also removes any current weight failure zeros.
+	WtFmLWt()
+
+	// WtFail zeros out effective synaptic weights to simulate synaptic communication failures.
+	WtFail()
+
 	// LrateMult sets the new Lrate parameter for Prjns to LrateInit * mult.
 	// Useful for implementing learning rate schedules.
 	LrateMult(mult float32)
@@ -245,6 +252,13 @@ type LeabraPrjn interface {
 
 	// WtBalFmWt computes the Weight Balance factors based on average recv weights
 	WtBalFmWt()
+
+	// WtFmLWt sets the effective weight value from the linear weight value.
+	// This also removes any current weight failure zeros.
+	WtFmLWt()
+
+	// WtFail zeros out effective synaptic weights to simulate synaptic communication failures.
+	WtFail()
 
 	// LrateMult sets the new Lrate parameter for Prjns to LrateInit * mult.
 	// Useful for implementing learning rate schedules.

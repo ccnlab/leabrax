@@ -1241,6 +1241,27 @@ func (ly *Layer) WtBalFmWt() {
 	}
 }
 
+// WtFmLWt sets the effective weight value from the linear weight value.
+// This also removes any current weight failure zeros.
+func (ly *Layer) WtFmLWt() {
+	for _, p := range ly.SndPrjns {
+		if p.IsOff() {
+			continue
+		}
+		p.(LeabraPrjn).WtFmLWt()
+	}
+}
+
+// WtFail zeros out effective synaptic weights to simulate synaptic communication failures.
+func (ly *Layer) WtFail() {
+	for _, p := range ly.SndPrjns {
+		if p.IsOff() {
+			continue
+		}
+		p.(LeabraPrjn).WtFail()
+	}
+}
+
 // LrateMult sets the new Lrate parameter for Prjns to LrateInit * mult.
 // Useful for implementing learning rate schedules.
 func (ly *Layer) LrateMult(mult float32) {

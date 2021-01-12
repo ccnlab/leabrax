@@ -72,12 +72,10 @@ var ParamSets = params.Sets{
 		"Network": &params.Sheet{
 			{Sel: "Prjn", Desc: "yes extra learning factors",
 				Params: params.Params{
-					"Prjn.Learn.Norm.On":          "true",
-					"Prjn.Learn.Momentum.On":      "true",
-					"Prjn.Learn.WtBal.On":         "false", // not obviously beneficial, maybe worse
-					"Prjn.Learn.Lrate":            "0.04",  // must set initial lrate here when using schedule!
-					"Prjn.Learn.WtSig.PFail":      "0.2",   // works..
-					"Prjn.Learn.WtSig.PFailWtMax": "0.8",
+					"Prjn.Learn.Norm.On":     "true",
+					"Prjn.Learn.Momentum.On": "true",
+					"Prjn.Learn.WtBal.On":    "false", // not obviously beneficial, maybe worse
+					"Prjn.Learn.Lrate":       "0.04",  // must set initial lrate here when using schedule!
 				}},
 			{Sel: "Layer", Desc: "needs some special inhibition and learning params",
 				Params: params.Params{
@@ -87,6 +85,11 @@ var ParamSets = params.Sets{
 			{Sel: ".Back", Desc: "top-down back-projections MUST have lower relative weight scale, otherwise network hallucinates -- smaller as network gets bigger",
 				Params: params.Params{
 					"Prjn.WtScale.Rel": "0.1",
+				}},
+			{Sel: ".Forward", Desc: "feedforward pathway",
+				Params: params.Params{
+					"Prjn.Learn.WtSig.PFail":      "0.2", // works..
+					"Prjn.Learn.WtSig.PFailWtMax": "0.8",
 				}},
 			{Sel: "#V1", Desc: "pool inhib (not used), initial activity",
 				Params: params.Params{
@@ -698,6 +701,7 @@ func (ss *Sim) TestItem(idx int) {
 
 // TestAll runs through the full set of testing items
 func (ss *Sim) TestAll() {
+	ss.Net.WtFmLWt()
 	ss.TestEnv.Init(ss.TrainEnv.Run.Cur)
 	ss.ActRFs.Reset()
 	for {
