@@ -645,8 +645,8 @@ func (pj *Prjn) WtBalFmWt() {
 			if wt == 0 { // if turned off
 				wt = sy.Scale * pj.Learn.WtSig.SigFmLinWt(sy.LWt)
 			}
-			if sy.Wt >= pj.Learn.WtBal.AvgThr {
-				sumWt += sy.Wt
+			if wt >= pj.Learn.WtBal.AvgThr {
+				sumWt += wt
 				sumN++
 			}
 		}
