@@ -5,6 +5,7 @@
 package leabra
 
 import (
+	"bufio"
 	"compress/gzip"
 	"errors"
 	"fmt"
@@ -430,12 +431,14 @@ func (nt *NetworkStru) SaveWtsJSON(filename gi.FileName) error {
 	ext := filepath.Ext(string(filename))
 	if ext == ".gz" {
 		gzr := gzip.NewWriter(fp)
-		defer gzr.Close()
-		nt.WriteWtsJSON(gzr)
+		err = nt.WriteWtsJSON(gzr)
+		gzr.Close()
 	} else {
-		nt.WriteWtsJSON(fp)
+		bw := bufio.NewWriter(fp)
+		err = nt.WriteWtsJSON(bw)
+		bw.Flush()
 	}
-	return nil
+	return err
 }
 
 // OpenWtsJSON opens network weights (and any other state that adapts with learning)
@@ -457,14 +460,16 @@ func (nt *NetworkStru) OpenWtsJSON(filename gi.FileName) error {
 		}
 		return nt.ReadWtsJSON(gzr)
 	} else {
-		return nt.ReadWtsJSON(fp)
+		return nt.ReadWtsJSON(bufio.NewReader(fp))
 	}
 }
+
+// todo: proper error handling here!
 
 // WriteWtsJSON writes the weights from this layer from the receiver-side perspective
 // in a JSON text format.  We build in the indentation logic to make it much faster and
 // more efficient.
-func (nt *NetworkStru) WriteWtsJSON(w io.Writer) {
+func (nt *NetworkStru) WriteWtsJSON(w io.Writer) error {
 	depth := 0
 	w.Write(indent.TabBytes(depth))
 	w.Write([]byte("{\n"))
@@ -498,7 +503,8 @@ func (nt *NetworkStru) WriteWtsJSON(w io.Writer) {
 	}
 	depth--
 	w.Write(indent.TabBytes(depth))
-	w.Write([]byte("}\n"))
+	_, err := w.Write([]byte("}\n"))
+	return err
 }
 
 // ReadWtsJSON reads network weights from the receiver-side perspective

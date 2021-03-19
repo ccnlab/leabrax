@@ -200,6 +200,7 @@ type Sim struct {
 	StopNow      bool                        `view:"-" desc:"flag to stop running"`
 	NeedsNewRun  bool                        `view:"-" desc:"flag to initialize NewRun if last one finished"`
 	RndSeeds     []int64                     `view:"-" desc:"a list of random seeds to use for each run"`
+	NetData      *netview.NetData            `view:"-" desc:"net data for recording in nogui mode"`
 	LastEpcTime  time.Time                   `view:"-" desc:"timer for last epoch"`
 }
 
@@ -645,6 +646,9 @@ func (ss *Sim) TestTrial(returnOnChg bool) {
 	ss.AlphaCyc(false)   // !train
 	ss.TrialStats(false) // !accumulate
 	ss.LogTstTrl(ss.TstTrlLog)
+	if ss.NetData != nil { // offline record net data from testing, just final state
+		ss.NetData.Record(ss.Counters(false))
+	}
 }
 
 // TestItem tests given item which is at given index in test item list
@@ -1432,6 +1436,7 @@ func (ss *Sim) ConfigGui() *gi.Window {
 	// 		win.Close()
 	// 	})
 
+	/* uncomment below to prompt before closing
 	inQuitPrompt := false
 	gi.SetQuitReqFunc(func() {
 		if inQuitPrompt {
@@ -1469,6 +1474,7 @@ func (ss *Sim) ConfigGui() *gi.Window {
 				}
 			})
 	})
+	*/
 
 	win.SetCloseCleanFunc(func(w *gi.Window) {
 		go gi.Quit() // once main window is closed, quit
@@ -1498,6 +1504,7 @@ func (ss *Sim) CmdArgs() {
 	var nogui bool
 	var saveEpcLog bool
 	var saveRunLog bool
+	var saveNetData bool
 	var note string
 	flag.StringVar(&ss.ParamSet, "params", "", "ParamSet name to use -- must be valid name as listed in compiled-in params or loaded params")
 	flag.StringVar(&ss.Tag, "tag", "", "extra tag to add to file names saved from this run")
@@ -1508,6 +1515,7 @@ func (ss *Sim) CmdArgs() {
 	flag.BoolVar(&ss.SaveWts, "wts", false, "if true, save final weights after each run")
 	flag.BoolVar(&saveEpcLog, "epclog", true, "if true, save train epoch log to file")
 	flag.BoolVar(&saveRunLog, "runlog", true, "if true, save run epoch log to file")
+	flag.BoolVar(&saveNetData, "netdata", false, "if true, save network activation etc data from testing trials, for later viewing in netview")
 	flag.BoolVar(&nogui, "nogui", true, "if not passing any other args and want to run nogui, use nogui")
 	flag.Parse()
 	ss.Init()
@@ -1543,6 +1551,10 @@ func (ss *Sim) CmdArgs() {
 			defer ss.RunFile.Close()
 		}
 	}
+	if saveNetData {
+		ss.NetData = &netview.NetData{}
+		ss.NetData.Init(ss.Net, 200) // 200 = amount to save
+	}
 	if ss.SaveWts {
 		fmt.Printf("Saving final weights per run\n")
 	}
@@ -1551,4 +1563,9 @@ func (ss *Sim) CmdArgs() {
 	ss.TrainEnv.Run.Max = ss.StartRun + ss.MaxRuns
 	ss.NewRun()
 	ss.Train()
+
+	if saveNetData {
+		ndfn := ss.Net.Nm + "_" + ss.RunName() + ".netdata.gz"
+		ss.NetData.SaveJSON(gi.FileName(ndfn))
+	}
 }
